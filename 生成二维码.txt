@@ -1,0 +1,33 @@
+示例网站 ：
+http://blog.csdn.net/zhihua_w/article/details/52764278
+http://blog.csdn.net/maxiaojingabc/article/details/70570785
+
+1.下载 phpqrcode  GitHub:   https://sourceforge.net/projects/phpqrcode/files/releases/phpqrcode-2010100721_1.1.4.zip/download?use_mirror=ncu\
+2.将下载的文件放入 ThinkPHP\Library\Vendor下 ，文件命名 Phpqrcode  
+3.在 Common/Common/function.php  写函数 function qrcode(){}
+
+/**
+ * 生成二维码
+ * @param  string  $url  url连接
+ * @param  integer $size 尺寸 纯数字
+ */
+function qrcode($url,$size=4){
+    Vendor('phpqrcode.phpqrcode');
+    QRcode::png($url,false,QR_ECLEVEL_L,$size,2,false,0xFFFFFF,0x000000);
+}
+
+
+4.控制器  
+
+public function qrcode(){
+        $url=I('post.url');
+        qrcode($url);
+}
+   	
+
+5.视图
+
+<form action="{:U('index/qrcode')}" method="post">
+        <input type="text" name="url" />
+        <input type="submit" value="生成二维码" />
+</form>
