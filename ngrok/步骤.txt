@@ -1,0 +1,5 @@
+1.´ò¿ª cmd ÃüÁî 
+2.ÊäÈë E£º
+3.cd E:\ngrok\windows_386
+
+4. ngrok -config=ngrok.cfg -subdomain gao 80
