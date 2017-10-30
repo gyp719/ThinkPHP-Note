@@ -1,0 +1,4 @@
+thinkPHP QQ互联 第三方登录
+
+1.申请QQ互联，创建的网站应用名称 应与 阿里云 申请的 网站名称一致 ， 否则审核不通过
+2.回调地址：http：//xxx.com/Home/Index/callback  （留心！！！）
