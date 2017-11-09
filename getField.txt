@@ -1,0 +1,61 @@
+读取字段值 getField
+
+1.获取数据库里某个字段的值
+$User = M("User"); // 实例化User对象
+
+// 获取ID为3的用户的昵称 
+$nickname = $User->where('id=3')->getField('nickname');
+
+
+2.获取整列数组  (重要、很实用!!!)
+$this->getField('id',true); // 获取id数组
+
+
+举例：
+$uc = M('User_courses');
+$user_id = session('user')['id'];
+$order_id = M('User_certies')->where(array('user_id' => $user_id,'status'=>1))->select();
+
+返回值：
+Array
+(
+    [0] => Array
+        (
+            [id] => 20
+            [user_id] => 32
+            [exam_id] => 7
+            [course_id] => 16
+            [order_id] => 76
+            [certyno] => 鄂生A
+            [score] => 12
+            [correct] => 30
+            [image] => 
+            [available] => 1
+            [status] => 1
+            [created_at] => 0
+            [updated_at] => 0
+        )
+
+)
+
+
+如下：
+$uc = M('User_courses');
+$user_id = session('user')['id'];
+
+// 获取order_id 数组的值
+$order_id = M('User_certies')->where(array('user_id' => $user_id,'status'=>1))->getField('order_id',true);
+
+        
+返回值：
+
+Array
+(
+    [0] => 76
+)
+
+
+
+
+
+
