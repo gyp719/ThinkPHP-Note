@@ -1,0 +1,4 @@
+$count=$this->where($where)->count();
+$page = new Page($count, $limit);
+$list=$this->where($where)->order('addtime desc')->limit($page->firstRow.','.$page->listRows)->select();
+$show=$page->show();
