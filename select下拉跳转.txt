@@ -1,0 +1,24 @@
+1.a 链接新窗口打开
+<a target="_blank" href=""></a>
+
+
+2.js 新窗口打开 window.open()
+
+
+3. 当前页面直接跳转
+<select name="" onchange="javascript:location.href=this.value;">
+
+
+
+
+
+案列：
+
+select 下拉框选中 实现 跳转
+
+<select onchange="window.open(this.value)">
+	<option value="volvo" disabled="disabled" selected="selected">请选择学习课件</option>
+	<option value="<{:U('Courses/pdf', array('id' => $vo['id'], 'order_id' => $order_id))}>">文本课件</option>
+	<option value="<{:U('Courses/video', array('id' => $vo['id'], 'order_id' => $order_id))}>">视频课件</option>
+	<option value="opel">音频课件</option>
+</select>
