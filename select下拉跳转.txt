@@ -5,7 +5,7 @@
 2.js 新窗口打开 window.open()
 
 
-3. 当前页面直接跳转
+3. 当前页面直接跳转 (支持手机浏览器下拉跳转)
 <select name="" onchange="javascript:location.href=this.value;">
 
 
