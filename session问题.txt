@@ -1,0 +1,27 @@
+﻿1.session 在ThinkPHP3.2 中设置有效期 无效 
+2.关闭浏览器会自动清除 session
+
+解决办法：
+
+① 在App/Common/Conf/config.php 添加 SESSION设置 
+
+ //***********************************SESSION设置**********************************
+    'SESSION_OPTIONS'         =>  array(
+        'name'                =>  'BJYSESSION',                    //设置session名
+        'expire'              =>  24*3600*15,                      //SESSION保存15天
+        'use_trans_sid'       =>  1,                               //跨页传递
+        'use_only_cookies'    =>  0,                               //是否只开启基于cookies的session的会话方式
+    ),
+
+缺点:session 全局有效期，不能控制有效期。
+
+
+② ThinkPHP3.2 cookie 可以设置有效期，用 cookie 存储有效期，赋值给一个变量，再用 session 存储。
+
+示例：
+ 
+ cookie('user',$data,24*3600*7);
+
+ $data=cookie('user')
+
+ session('user', $data);
