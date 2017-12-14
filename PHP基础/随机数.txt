@@ -1,0 +1,21 @@
+1.随机数
+
+	随机数	rand(); //有最大范围  32767
+	更好的随机数	mt_rand();	//速度比 rand 快四倍
+	
+	echo getrandmax();//32767
+	echo mt_getrandmax();//2147483647
+	
+2.格式化数字字符串
+	number_format
+	
+3.	向下取整 floor();	
+	向上取整 ceil();
+	四舍五入 round();
+	最小值 min();
+	最大值 max();
+	圆周率的值 pi();
+	pow(2,2)//2的2次方
+	bcadd(2,7)//高精度相加(小数点后会去掉) 9
+	bcadd(2,2.456);//4
+	bcadd(2,2.123,3)//4.123
