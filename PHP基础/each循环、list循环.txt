@@ -1,0 +1,86 @@
+﻿each 返回数组中当前的键／值对并将数组指针向前移动一步 
+
+each 这个函数返回的是一个数组
+each 将第一个键值对获取到，然后包装成一个新数组。
+
+
+举例：
+$userAges = array('陈武'=> 20,'赵广帅'=>26,'马云'=>54);
+
+$arr = each($userAges);
+print_r($arr);
+
+
+$arr = each($userAges);
+print_r($arr[0]);//赵广帅
+
+输出值：Array ( [1] => 20 [value] => 20 [0] => 陈武 [key] => 陈武 )
+
+	print_r($arr[0]);//陈武
+
+
+	print_r($arr['key'])//陈武
+
+
+
+
+！！ 两个感叹号，表示真实存在的数据转换成布尔值  (注意)
+
+$userAges = array('陈武'=> 20,'赵广帅'=>26,'马云'=>54);
+
+while(!!$a=each($userAges)){
+        echo $a['key'].'---'.$a['value'].'<br/>';
+}
+
+返回值：陈武---20
+	赵广帅---26
+	马云---54
+
+
+------------------------------------------------------------------------
+list  把数组中的值赋给一些变量 
+list  只能认识key为数字的，自定义的字符串key是无法使用list来识别的
+
+
+$a = array('aaa','bbb','ccc','ddd');
+
+
+    list($var1,$var2,$var3,$var4) = $a;
+
+    echo $var4;//ddd
+
+
+//不能使用list循环  ，下标只能是数字
+ $userAges = array('陈武'=> 20,'赵广帅'=>26,'马云'=>54);
+
+
+list 和 each 并用 
+
+$userAges = array('陈武'=> 20,'赵广帅'=>26,'马云'=>54);
+
+
+    list($name,$age) = each($userAges);
+    echo $name; //陈武
+    echo $age;	//20
+
+
+
+reset 将数组的内部指针指向第一个单元  （重置）
+
+
+
+array_unique -- 移除数组中重复的值
+
+举例:$userAges = array('陈武'=> 20,'赵广帅'=>26,'马云'=>54,'王健林'=>54);
+	print_r(array_unique($userAges));
+
+返回值： Array ( [陈武] => 20 [赵广帅] => 26 [马云] => 54 )
+
+
+array_flip -- 交换数组中的键和值
+
+
+$userAges = array('陈武'=> 20,'赵广帅'=>26,'马云'=>54,'王健林'=>54);
+
+print_r(array_flip($userAges));//Array ( [20] => 陈武 [26] => 赵广帅 [54] => 王健林 )  交换键值
+
