@@ -84,3 +84,87 @@ $userAges = array('陈武'=> 20,'赵广帅'=>26,'马云'=>54,'王健林'=>54);
 
 print_r(array_flip($userAges));//Array ( [20] => 陈武 [26] => 赵广帅 [54] => 王健林 )  交换键值
 
+
+多维数组 循环遍历(2种方法)
+举例：
+$products = array(
+        array('产品名称'=>'苹果','数量'=>6,'价格'=>28.8),
+        array('产品名称'=>'猪肉','数量'=>2,'价格'=>32.1),
+        array('产品名称'=>'饼干','数量'=>3,'价格'=>45.3),
+    );
+	
+	①for($i=0;$i<count($products);$i++){
+        foreach($products[$i] as $k=>$v){
+            echo $k.'---'.$v.'|';
+        }
+        echo '<br/>';
+    }
+	
+	②for($i=0;$i<count($products);$i++){
+        while(!!list($key,$value) = each($products[$i])){
+            echo $key.'---'.$value.'|';
+        }
+        echo '<br/>';
+    }
+	
+	
+数组的排序
+	
+	sort — 对数组排序 ,返回值 是布尔值,排序成功返回 1  
+			按数组的值 排序 ，对中文也有效
+			
+举例：
+	$fruit = array('banner','orange','apple');
+	sort($fruit);
+	print_r($fruit);//	Array ( [0] => apple [1] => banner [2] => orange )
+	
+	
+	$names = array('马云','李彦宏','高易平');
+	sort($names);
+    print_r($names);//	Array ( [0] => 李彦宏 [1] => 马云 [2] => 高易平 )
+	
+对数字升序 排序
+	$nums = array(134,1,34,35,45,653,343,335);
+	sort($nums);
+	print_r($nums);// Array ( [0] => 1 [1] => 34 [2] => 35 [3] => 45 [4] => 134 [5] => 335 [6] => 343 [7] => 653 )
+	
+	
+ $numbers = array('2','12');
+	sort($numbers,SORT_NUMERIC); //作为数字比较
+    print_r($numbers); // Array ( [0] => 2 [1] => 12 )
+	
+	
+	sort($numbers,SORT_STRING); //作为字符串比较
+    print_r($numbers);	// Array ( [0] => 12 [1] => 2 )
+	
+	
+arsort — 对数组进行排序并保持索引关系 
+
+ $fruit = array('banner','orange','apple');
+    asort($fruit); //保留原始数字的下标
+
+    print_r($fruit); // Array ( [2] => apple [0] => banner [1] => orange )
+	
+	
+krsort — 对数组按照键名排序
+
+$fruit = array('c'=>'banner','a'=>'orange','b'=>'apple');
+    ksort($fruit); 按照下标进行排序
+	
+    print_r($fruit); //Array ( [a] => orange [b] => apple [c] => banner )
+
+实现反向排序  加上 r 
+	rsort()	arsort() krsort();
+	
+随机打乱数组 	shuffle()
+
+
+    $pic = array('1.jpg','2.jpg','3.jpg','4.jpg','5.jpg','6.jpg');
+
+    //数组随机打乱
+    shuffle($pic);
+	print_r($pic);
+	
+array_reverse — 返回原来数组的反向排序
+	
+
