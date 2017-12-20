@@ -167,4 +167,68 @@ $fruit = array('c'=>'banner','a'=>'orange','b'=>'apple');
 	
 array_reverse — 返回原来数组的反向排序
 	
+array_unshift — 在数组开头插入一个或多个单元 
 
+返回值：得到目前数组的元素个数。
+
+举例:
+	$username = array('吴起');
+	array_unshift($username,'马云','李彦宏','雷军');
+
+    print_r($username); // Array ( [0] => 马云 [1] => 李彦宏 [2] => 雷军 [3] => 吴起 )
+
+array_push — 在结尾插入数据
+
+	array_push($username,'高易平');
+	print_r($username); // Array ( [0] => 马云 [1] => 李彦宏 [2] => 雷军 [3] => 吴起 [4] => 高易平 )
+
+array_shift — 将数组开头的单元移出数组 
+	 array_shift($username);
+	print_r($username);	 // Array ( [0] => 李彦宏 [1] => 雷军 [2] => 吴起 [3] => 高易平 )
+
+array_pop — 将数组最后一个单元弹出（出栈）	
+	array_pop($username);
+	print_r($username);	// Array ( [0] => 李彦宏 [1] => 雷军 [2] => 吴起 )
+	
+array_rand — 从数组中随机取出一个或多个单元 获取一个数组中的键(key) 
+			第二个参数表面随机获取几个
+
+	$a = array_rand($fruits,2);
+
+    echo $fruits[$a[0]];
+    echo $fruits[$a[1]];		
+
+current — 返回数组中的当前单元 ，指针没有下移  each(下移) 
+
+举例：
+	$userAges = array('陈武','赵广帅','马云');
+
+    echo current($userAges); // 陈武
+
+next — 将数组中的内部指针向前移动一位 
+	$userAges = array('陈武','赵广帅','马云');
+	echo next($userAges);// 赵广帅
+
+reset — 将数组的内部指针指向第一个单元
+
+prev — 将数组的内部指针倒回一位
+
+统计数组的个数 count/sizeof
+	 $userAges = array('陈武','赵广帅','马云');
+	 echo sizeof($userAges); // 3
+
+array_count_values — 统计数组中所有的值出现的次数
+	举例：
+	$userAges = array('陈武'=> 20,'赵广帅'=>26,'马云'=>54);
+
+    print_r(array_count_values($userAges)); // Array ( [20] => 1 [26] => 1 [54] => 1 )
+
+将数组转换成标量变量 extract();    
+	通过标量函数将字符串键(key)设置成变量，然后将值赋给了这个变量
+
+	举例：
+	$fruits = array('a'=>'apple','b'=>'banner','c'=>'orange');
+    extract($fruits);
+    echo $a; // apple
+    echo $b; // banner
+    echo $c; // orange
