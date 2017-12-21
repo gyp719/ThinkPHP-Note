@@ -1,0 +1,55 @@
+basename — 返回路径中的文件名部分
+    举例:
+    $path = 'D:\phpStudy\WWW\Ycku\PhpBased\basic6\demo01.php';
+        echo basename($path); // demo01.php
+
+dirname — 返回路径中的目录部分
+    举例：
+     $path = 'D:\phpStudy\WWW\Ycku\PhpBased\basic6\demo01.php';
+            echo basename($path); // D:\phpStudy\WWW\Ycku\PhpBased\basic6
+
+pathinfo — 返回文件路径的信息,其中包括：目录名、基本名和扩展名。
+    举例：
+    $path = 'D:\phpStudy\WWW\Ycku\PhpBased\basic6\demo01.php';
+     print_r(pathinfo($path));
+
+返回值：
+    Array
+    (
+        [dirname] => D:\phpStudy\WWW\Ycku\PhpBased\basic6
+        [basename] => demo01.php
+        [extension] => php
+        [filename] => demo01
+    )
+
+realpath — 返回规范化的绝对路径名
+ 举例：
+  $path = 'demo02.php';
+     echo realpath($path); // D:\phpStudy\WWW\Ycku\PhpBased\basic6\demo02.php
+
+filesize — 取得文件大小
+    举例：
+    $path = 'D:\phpStudy\WWW\Ycku\PhpBased\basic6\demo03.php';
+        echo round(filesize($path)/1024,2).'KB'; // 0.12KB
+
+disk_free_space — 返回目录中的可用空间
+    echo round(disk_free_space('C:')/1024/1024/1024,2).'GB'; //25.71GB
+
+disk_total_space — 返回一个目录的磁盘总大小
+    echo round(disk_total_space("C:")/1024/1024/1024,2).'GB'; // 50GB
+
+fileatime — 取得文件的最后访问时间
+    $path = 'D:\phpStudy\WWW\Ycku\PhpBased\basic3\demo01.php';
+    echo date('Y-m-d H:i:s',fileatime($path)); // 2017-12-21 22:45:56
+
+filectime — 取得文件的改变时间，所有者，权限
+
+filemtime — 取得文件最后的修改时间，文件里面的内容修改后的时间
+
+date_default_timezone_set — 设定用于一个脚本中所有日期时间函数的默认时区
+
+
+
+
+
+
