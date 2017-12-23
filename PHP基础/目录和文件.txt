@@ -48,7 +48,28 @@ filemtime — 取得文件最后的修改时间，文件里面的内容修改后
 
 date_default_timezone_set — 设定用于一个脚本中所有日期时间函数的默认时区
 
+----文件的处理
 
+fopen() 打开文件    第一个参数表明哪个文件，第二个参数表明模式
+
+1.如果文件已经存在，并且已有数据，那么删除这个文件，重新创建
+2.如果没有这个文件，那么自动创建。
+返回值：资源句柄
+
+fwrite() 写入文件   第一个参数是资源，第二个参数是写入的内容，第三个参数是写入的长度
+
+ 举例：
+    $fp = fopen('file.txt','w');
+
+        $outString = 'this is PHP show';
+
+        fwrite($fp,$outString,strlen($outString)); //strlen 获取字符串的长度
+
+        fclose($fp);
+
+
+file_put_contents — 将一个字符串写入文件
+    file_put_contents('file.txt2','学习PHP');
 
 
 
