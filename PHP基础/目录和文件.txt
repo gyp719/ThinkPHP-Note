@@ -72,5 +72,73 @@ file_put_contents — 将一个字符串写入文件
     file_put_contents('file.txt2','学习PHP');
 
 
+--读出文件
+fgetc()     读出一个字符，并将指针移到下一个字符
+fgets()     读出一行字符，可以指定一行显示的长度  返回长度最多为 length - 1 字节的字符串
+fgetss()    从文件指针中读取一行并过滤掉HTML标签
+fread()     读取定量的字符
+fpassthru   输出文件指针处的所有剩余数据  echo输出 返回的是剩余的总长度
+
+file()      将整个文件读入数组中，以行来分组
+readfile()  读入一个文件并写入到输出缓冲     返回值是文件字节的总长度
+file_get_contents   将整个文件读入一个字符串，用echo 输出
+
+feof — 测试文件指针是否到了文件结束的位置
+
+        $fp = fopen('file.txt','r');
+        while(!feof($fp)) {
+            echo fgetc($fp);
+        }
+        fclose($fp);
+
+file_exists — 检查文件或目录是否存在
+filesize — 取得文件大小
+unlink — 删除文件
+rewind — 倒回文件指针的位置
+ftell — 返回文件指针读/写的位置
+fseek — 在文件指针中定位
+
+opendir — 打开目录句柄
+readdir — 从目录句柄中读取条目
+closedir — 关闭目录句柄
+举例：
+     $dir = opendir('D:\phpStudy\WWW\Ycku\PhpBased\basic6');
+
+        while($file = readdir($dir)){
+           if($file!='.' && $file!= '..'){
+               echo $file.'<br/>';
+           }
+        }
+        closedir($dir);
+
+scandir — 将目录读入数组
+举例：
+    print_r(scandir('D:\phpStudy\WWW\Ycku\PhpBased\basic6'));
+
+返回值：
+
+Array
+(
+    [0] => .
+    [1] => ..
+    [2] => demo01.php
+    [3] => demo02.php
+    [4] => demo03.php
+    [5] => demo04.php
+    [6] => demo05.php
+    [7] => demo06.php
+    [8] => demo07.php
+    [9] => demo08.php
+    [10] => demo09.php
+    [11] => demo10.php
+    [12] => demo11.php
+    [13] => demo12.php
+    [14] => demo13.php
+    [15] => file.txt
+    [16] => file2.txt
+)
+
+rmdir — 删除空目录  相对路径和绝对路径都可以操作的
+rename — 重命名一个文件或目录
 
 
