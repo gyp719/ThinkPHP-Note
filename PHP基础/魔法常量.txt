@@ -4,3 +4,9 @@
    __FUNCTION__ 当前函数名
    __CLASS__    当前类名
    __METHOD__   当前方法名
+
+一般包含文件，建议使用__FILE__,速度更快
+
+ echo dirname(__FILE__); // D:\phpStudy\WWW\Ycku\PhpBased\basic7  取得目录，去掉文件名
+ 
+ 引入文件： require dirname(__FILE__).'\demo01.php';
