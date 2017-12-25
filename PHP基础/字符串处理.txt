@@ -32,3 +32,57 @@ str_pad — 使用另一个字符串填充字符串为指定长度
         echo str_pad($input, 10, "-=", STR_PAD_LEFT);  // 输出 "-=-=-Alien"
         echo str_pad($input, 10, "_", STR_PAD_BOTH);   // 输出 "__Alien___"
         echo str_pad($input, 6 , "___");               // 输出 "Alien_"
+
+explode — 使用一个字符串分割另一个字符串  返回数组
+    第一个参数是分割字符串，第二个字符串是要被分割的字符串
+
+    举例：
+    $array = explode('@','gyp@163.com');
+    print_r($array); // Array ( [0] => gyp [1] => 163.com )
+
+implode — 将一个一维数组的值转化为字符串
+    举例：
+    $array = explode('@','gyp@163.com');
+    $str = implode('@',$array);
+    echo $str; // gyp@163.com
+
+strtok — 标记分割字符串
+
+    $str = 'I ,will . be # back';
+        $tok = strtok($str,',.#');
+
+        while($tok){
+            echo $tok.'<br/>';
+            $tok = strtok(',.#');
+        }
+
+    返回值：I
+          will
+          be
+          back
+
+substr() 函数返回字符串的一部分。substr(string,start,length)
+
+str_split — 将字符串转换为数组  (不太适合中文)
+     $str = 'this is a PHP';
+        print_r(str_split($str));
+
+返回值：
+        Array
+        (
+            [0] => t
+            [1] => h
+            [2] => i
+            [3] => s
+            [4] =>
+            [5] => i
+            [6] => s
+            [7] =>
+            [8] => a
+            [9] =>
+            [10] => P
+            [11] => H
+            [12] => P
+        )
+
+strrev — 反转字符串
