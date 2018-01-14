@@ -139,3 +139,21 @@ substr_replace — 替换字符串的子串
 //从第一个位置开始(参数3)，取出5个来(参数4)，将它替换成&&&(参数2)
     echo substr_replace('gyp719@163.com','&&&',0,5); //&&&9@163.com
 
+处理中文字符
+mb_strlen — 获取字符串的长度
+
+    $str = '我是吴起';
+    echo strlen($str);//12
+    echo mb_strlen($str,'utf-8');//4
+
+mb_substr — 获取字符串的部分
+    $str = '我是吴起';
+    echo mb_substr($str,0,2,'utf-8'); // 我是
+
+mb_strpos — 查找字符串在另一个字符串中首次出现的位置
+     $str = '我是吴起';
+      echo mb_strpos($str,'是',0,'utf-8'); // 1
+
+mb_substr_count — 统计字符串出现的次数  可以不需要字符编码
+    $str = '我是吴起是是是';
+    echo mb_substr_count($str,'是','utf-8');
