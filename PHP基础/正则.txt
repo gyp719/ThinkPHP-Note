@@ -34,3 +34,51 @@ $  匹配字符串的行尾
 i       不区分大小写
 x       忽略正则中的空白
 A       强制从头开始匹配
+
+风格函数
+
+preg_grep()函数搜索数组中的所有元素,返回由与某个模式匹配的所有元素组成的数组
+
+    $language = array('php','asp','java','pyphon','js');
+    $patten = '/p$/';
+    print_r(preg_grep($patten,$language)); //Array ( [0] => php [1] => asp )
+
+preg_match()函数在字符串中搜索模式,如果存在则返回true,否则返回false
+    echo preg_match('/php[1-6]/','php6');//1
+
+    $patten = '/([\w\.]{2,255})@([\w-]{1,255}).([a-z]{2,4})/';
+        $subject  = 'yc60.com@gmail.com';
+        if(preg_match($patten,$subject)){
+            echo '邮箱合法';
+        }else{
+            echo '邮箱不合法';
+        }
+
+preg_match_all() 函数用于进行正则表达式全局匹配，成功返回整个模式匹配的次数（可能为零），如果出错返回 FALSE 。
+     echo preg_match_all('/php[1-6]/','php5dfkjdfkphp6sdhjphp3');//3
+
+     preg_match_all('/php[1-6]/','php5dfkjdfkphp6sdhjphp3',$out);
+     print_r($out); // Array ( [0] => Array ( [0] => php5 [1] => php6 [2] => php3 ) )
+
+preg_quote()需要参数 str 并向其中 每个正则表达式语法中的字符前增加一个反斜线。
+     echo preg_quote('php is $100');//php is \$100
+
+preg_replace()搜索到所有匹配,然后替换成想要的字符串返回出来
+    preg_replace (正则表达式, 替换成, 字符串, 最大替换次数【默认-1，无数次】, 替换次数)
+    echo preg_replace('/php[1-6]/','python','this is php4,this is php5'); //this is python,this is python
+
+
+     $patten = '/(\[b\])(.*)(\[\/b\])/U'; //U 禁止贪婪
+     $replace = '<strong>\2</strong>';
+
+     $string = 'this is [b]php5[/b],this is [b]php4[/b]';
+
+     echo preg_replace($patten,$replace,$string);
+
+preg_split — 通过一个正则表达式分隔字符串
+
+         print_r(preg_split('/[\.@]/','yc60.com@gmail.com'));//Array ( [0] => yc60 [1] => com [2] => gmail [3] => com )
+
+
+
+
