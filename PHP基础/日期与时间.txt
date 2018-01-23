@@ -1,0 +1,73 @@
+
+checkdate()函数能够很好的验证日期,提供的日期如果有效,则返回true,否则返回false
+    echo checkdate(1,23,2018);//1
+
+date — 格式化一个本地时间／日期
+    echo date('Y-m-d H:i:s');//2018-01-23 14:45:30
+
+gettimeofday — 取得当前时间,返回一个关联数组
+    print_r(gettimeofday());
+
+getdate — 取得日期／时间信息
+    print_r(getdate());
+
+  返回：
+Array
+(
+    [seconds] => 3
+    [minutes] => 2
+    [hours] => 17
+    [mday] => 23
+    [wday] => 2
+    [mon] => 1
+    [year] => 2018
+    [yday] => 22
+    [weekday] => Tuesday
+    [month] => January
+    [0] => 1516698123
+)
+
+
+     print_r(getdate(1516698164));
+
+     返回：
+Array
+(
+    [seconds] => 44
+    [minutes] => 2
+    [hours] => 17
+    [mday] => 23
+    [wday] => 2
+    [mon] => 1
+    [year] => 2018
+    [yday] => 22
+    [weekday] => Tuesday
+    [month] => January
+    [0] => 1516698164
+)
+
+
+time — 返回当前的 Unix 时间戳
+    echo date('Y-m-d H:i:s',time()+60*60*8); //当前日期+1天
+
+mktime() 获取特定指定时间的时间戳
+        获取 2017-10-08 08:08:08 时间戳
+    echo mktime(8,8,8,10,8,2017);//1507421288
+
+
+        时间戳计算时间差
+        $now = time();
+        $wnow = mktime(0,0,0,2,23,2018);
+        echo round(($wnow-$now)/60/60,2); //725.81小时
+
+strtotime — 将任何英文文本的日期时间描述解析为 Unix 时间戳
+    echo strtotime('2018-1-20'); //1516406400
+
+
+
+
+
+
+
+
+
