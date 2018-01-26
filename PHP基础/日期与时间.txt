@@ -7,6 +7,15 @@ date — 格式化一个本地时间／日期
 
 gettimeofday — 取得当前时间,返回一个关联数组
     print_r(gettimeofday());
+    
+    返回：
+    Array
+    (
+        [sec] => 1516954505
+        [usec] => 530209
+        [minuteswest] => 0
+        [dsttime] => 0
+    )
 
 getdate — 取得日期／时间信息
     print_r(getdate());
@@ -63,7 +72,58 @@ mktime() 获取特定指定时间的时间戳
 strtotime — 将任何英文文本的日期时间描述解析为 Unix 时间戳
     echo strtotime('2018-1-20'); //1516406400
 
+    $a = strtotime('2018-1-26 15:20:22')-strtotime('2018-1-26 15:19:54');
+        if($a>=60){
+            echo '休息一会';
+        }else{
+            echo $a;
+        }
 
+getlastmod — 获取页面最后修改的时间
+     echo date('Y-m-d H:i:s',getlastmod());//2018-01-26 15:32:40
+
+date_default_timezone_set() 设定用于所有日期时间函数的默认时区。
+
+date_default_timezone_get — 取得一个脚本中所有日期时间函数所使用的默认时区
+
+localtime — 取得本地时间
+    print_r(localtime(time(),true));
+
+返回：
+Array
+(
+    [tm_sec] => 51
+    [tm_min] => 12
+    [tm_hour] => 16
+    [tm_mday] => 26
+    [tm_mon] => 0
+    [tm_year] => 118
+    [tm_wday] => 5
+    [tm_yday] => 25
+    [tm_isdst] => 0
+)
+
+microtime — 返回当前 Unix 时间戳和微秒数
+    echo microtime();   //0.87420900 1516955413
+
+
+------页面运行的时间
+
+    function fn(){
+            list($a,$b) = explode(' ',microtime());
+            return $a + $b;
+        }
+
+
+        $start_time = fn();
+
+        for($i=0;$i<100000;$i++){
+            echo $i.'<br/>';
+        }
+
+        $end_time = fn();
+        echo '<hr/>';
+        echo $end_time - $start_time;
 
 
 
