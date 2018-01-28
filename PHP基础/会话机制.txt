@@ -1,0 +1,13 @@
+
+创建cookie
+    setcookie('name','Lee',time()+(7*24*60*60));
+    参数1：cookie 名称
+    参数2：cookie 值
+    参数3：cookie 过期时间
+
+读取cookie
+    echo $_COOKIE['name'];
+
+删除cookie
+    setcookie('name','');
+    setcookie('name','Lee',time()-1);
