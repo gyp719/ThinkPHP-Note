@@ -5,9 +5,26 @@
     参数2：cookie 值
     参数3：cookie 过期时间
 
-读取cookie
+读取cookie (慢半拍)
     echo $_COOKIE['name'];
 
 删除cookie
     setcookie('name','');
     setcookie('name','Lee',time()-1);
+    
+session
+    在使用session会话处理,必须开始使用 session_start()开始会话
+
+创建session
+    session_start();
+    $_SESSION['username'] = 'Lee';
+    echo $_SESSION['username'];
+
+删除session
+    unset($_SESSION['username']);
+
+销毁所有session (慢半拍)
+    session_destroy();
+
+cookie 与 session
+    cookie 存在客户端,session 存在服务端,cookie不占用服务器资源,适用于会员登录,购物车    
