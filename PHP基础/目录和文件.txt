@@ -141,4 +141,17 @@ Array
 rmdir — 删除空目录  相对路径和绝对路径都可以操作的
 rename — 重命名一个文件或目录
 
+ dirname(__FILE__); //获取当前文件的 目录 路径
+is_dir — 判断给定文件名是否是一个目录
+
+
+
+文件上传
+
+$_FILES 超级全局变量,他存储各种与上传有关的信息
+
+is_uploaded_file — 判断文件是否是通过 HTTP POST 上传的
+
+move_uploaded_file — 将上传的文件移动到新位置
+
 
