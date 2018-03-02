@@ -1,0 +1,68 @@
+
+//1.将输出类型改成图像流
+header('Content-Type:image/jpeg');
+
+//2.创建一个图形区域,图像背景
+$img = imagecreatetruecolor(200,200);
+
+//3.为图像分配颜色
+$color = imagecolorallocate($img,0,102,255);
+//区域填充
+imagefill($img,0,0,$color);
+
+
+//4.在背景颜色加入线条、文字
+//画出一条线
+$white = imagecolorallocate($img,255,255,255);
+imageline($img,0,0,200,200,$white);
+imageline($img,200,0,0,200,$white);
+//绘制文本
+imagestring($img,5,100,100,'GYP',$white);
+
+//5.输出最终图形
+imagejpeg($img);
+
+//6.清空资源
+imagedestroy($img);
+
+/*------------------------------------------------*/
+
+//创建为4位数验证码
+
+$msg = '';
+for($i=0;$i<=3;$i++){
+
+    //dechex — 十进制转换为十六进制
+    $msg .= dechex(mt_rand(0,15));
+}
+
+header("Content-Type:image/png");
+
+$img = imagecreatetruecolor(75,25);
+
+$blue = imagecolorallocate($img,0,102,205);
+$white = imagecolorallocate($img,255,255,255);
+imagefill($img,0,0,$blue);
+imagestring($img,5,20,5,'$msg',$white);
+
+imagepng($img);
+
+imagedestroy($img);
+
+/*------------------------------------------------*/
+//加载已有图形
+
+define('__DIR__',dirname(__FILE__).'\\');
+
+header('Content-Type:image/png');
+
+//imagecreatefrompng — 由文件或 URL 创建一个新图象。
+$img = imagecreatefromjpeg(__DIR__.'/flower_1.png');
+
+$white = imagecolorallocate($img,255,0,0);
+imagestring($img,5,100,50,'ycku.com',$white);
+
+imagepng($img);
+imagedestroy($img);
+
+
