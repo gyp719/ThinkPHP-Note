@@ -1,0 +1,139 @@
+﻿用阿里云的免费 SSL 证书让网站从 HTTP 换成 HTTPS
+
+
+
+http://blog.csdn.net/weixin_39696369/article/details/77231017
+
+
+
+
+1.在阿里云购买免费证书  Symantec  1个域名  
+
+2.填写信息，证书绑定的域名 (需要www)
+
+3.域名验证类型 DNS  并勾选，会自动在域名解析生成一条记录
+
+4.在证书页面，下载证书，上传证书 ， 配置nginx
+
+5.在服务器下配置 HTTPS(443) 安全组规则  （特别注意）
+
+
+允许 自定义 TCP 
+443/443  
+地址段访问 
+
+0.0.0.0/0
+
+HTTPS 
+
+
+
+说明：
+
+
+安装证书
+
+文件说明：
+1. 证书文件214529881250182.pem，包含两段内容，请不要删除任何一段内容。
+2. 如果是证书系统创建的CSR，还包含：证书私钥文件214529881250182.key。
+
+
+
+( 1 ) 在Nginx的安装目录下创建cert目录，并且将下载的全部文件拷贝到cert目录中。
+( 2 ) 打开 Nginx 安装目录下 conf 目录中的 nginx.conf 文件，找到：
+
+# HTTPS server
+# #server {
+# listen 443;
+# server_name localhost;
+# ssl on;
+# ssl_certificate cert.pem;
+# ssl_certificate_key cert.key;
+# ssl_session_timeout 5m;
+# ssl_protocols SSLv2 SSLv3 TLSv1;
+# ssl_ciphers ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP;
+# ssl_prefer_server_ciphers on;
+# location / {
+#
+#
+#}
+#}
+
+
+( 3 ) 将其修改为 (以下属性中ssl开头的属性与证书配置有直接关系，其它属性请结合自己的实际情况复制或调整) :
+
+server {
+    listen 443;
+    server_name localhost;
+    ssl on;
+    root html;
+    index index.html index.htm;
+    ssl_certificate   cert/214529881250182.pem;
+    ssl_certificate_key  cert/214529881250182.key;
+    ssl_session_timeout 5m;
+    ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+    ssl_prefer_server_ciphers on;
+    location / {
+        root html;
+        index index.html index.htm;
+    }
+}
+
+( 4 )重启 Nginx。
+
+
+特别说明：
+nginx 配置 出现以下问题
+
+① 访问https 不是项目路径 ，root html; 需要修改 为  root  /home/wwwroot/default;
+
+② 只能访问 index.html 页面 ，访问php, 文件会出现下载的情况 ，不能访问PHP文件
+
+
+自己修改的配置  
+
+server {
+    listen 443;
+    server_name localhost;
+    ssl on;
+   root  /home/wwwroot/default;
+    index index.html index.htm index.php;
+    ssl_certificate   /usr/local/nginx/cert/214529881250182.pem;
+    ssl_certificate_key  /usr/local/nginx/cert/214529881250182.key;
+    ssl_session_timeout 5m;
+    ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+    ssl_prefer_server_ciphers on;
+ include enable-php.conf;
+
+    location /nginx_status
+        {
+            stub_status on;
+            access_log   off;
+        }
+
+        location ~ .*\.(gif|jpg|jpeg|png|bmp|swf)$
+        {
+            expires      30d;
+        }
+
+        location ~ .*\.(js|css)?$
+        {
+            expires      12h;
+        }
+
+        location ~ /.well-known {
+            allow all;
+        }
+
+        location ~ /\.
+        {
+            deny all;
+        }
+
+        access_log  /home/wwwlogs/access.log;
+}
+
+
+
