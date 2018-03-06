@@ -137,3 +137,9 @@ server {
 
 
 
+http强制跳转到 https 
+在 nginx.conf 80 处加入 
+rewrite ^(.*)$ https://$host$1 permanent;
+
+
+
