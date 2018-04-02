@@ -1,0 +1,21 @@
+淘宝镜像  	npm install -g cnpm --registry=https://registry.npm.taobao.org
+中国镜像	composer cronfig -g repo.packagist composer https://packagist.phpcomposer.com
+
+登录注册命令
+php artisan make:auth
+
+php artisan migrate
+
+修改中文包
+
+//中文包
+
+//composer require caouecs/laravel-lang:~3.0
+
+//步骤
+
+//1. 找到vendor/caouecs/laravel-lang/src/zh-CN，整个文件夹复制到resources/lang。
+
+//2. 修改app/config.php
+
+//'locale' => 'zh-CN',
