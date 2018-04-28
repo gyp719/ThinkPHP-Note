@@ -382,3 +382,40 @@ function is_idcard($idcard = '')
     if ($verify_number == strtoupper(substr($idcard, 17, 1))) return true;
     return false;
 }
+
+//统计中常用的最近4周的日期
+
+<?php
+//统计中常用的 计算获取当日之前（包括）的日期
+        //var_dump(date('m-d',strtotime('0 days')));
+        //本周
+        $today = date('w');//var_dump($today);
+        if (0 == $today) {
+            $today = 7;
+        }
+        $nowWeek = array_map(function ($vo) {
+            return date('m-d', strtotime('-' . $vo . ' days'));
+        }, range(0, $today - 1));
+        sort($nowWeek);
+        //上周
+        $preWeek = array_map(function ($vo) {
+            return date('m-d', strtotime('-' . $vo . ' days'));
+        }, range($today, $today + 6));
+        sort($preWeek);
+        //上上周
+        $presWeek = array_map(function ($vo) {
+            return date('m-d', strtotime('-' . $vo . ' days'));
+        }, range($today + 7, $today + 13));
+        sort($presWeek);
+        //上上上周
+        $oldWeek = array_map(function ($vo) {
+            return date('m-d', strtotime('-' . $vo . ' days'));
+        }, range($today + 14, $today + 20));
+        sort($oldWeek);
+
+        var_dump($nowWeek);
+        var_dump($preWeek);
+        var_dump($presWeek);
+        var_dump($oldWeek);
+
+?>
