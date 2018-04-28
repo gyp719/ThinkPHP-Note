@@ -1,0 +1,361 @@
+﻿/**
+ * 高效判断远程文件是否存在
+ * @param $file
+ * @return bool 存在返回 true 不存在或者其他原因返回false
+ */
+function remoteFileExist($file)
+{
+    if(preg_match('/^http:\/\//',$file)){
+        //远程文件
+        if(ini_get('allow_url_fopen')){
+            if(@fopen($file,'r')) return true;
+        }
+        else{
+            $parseurl=parse_url($file);
+            $host=$parseurl['host'];
+            $path=$parseurl['path'];
+            $fp=fsockopen($host,80, $errno, $errstr, 10);
+            if(!$fp)return false;
+            fputs($fp,"GET {$path} HTTP/1.1 \r\nhost:{$host}\r\n\r\n");
+            if(preg_match('/HTTP\/1.1 200/',fgets($fp,1024))) return true;
+        }
+        return false;
+    }
+    return file_exists($file);
+}
+
+/**
+ * 对象obj 转数组array
+ * @param $object
+ * @return mixed
+ */
+function object2array(&$object) {
+    $object =  json_decode( json_encode( $object),true);
+    return  $object;
+}
+
+/**
+* @param 字节大小 $size
+* @param 保留小数位数 $dec
+* 格式化文件大小
+*/
+function file_size($size, $dec=2) {
+	$a = array("B", "KB", "MB", "GB", "TB", "PB");
+	$pos = 0;
+	while ($size >= 1024) {
+		 $size /= 1024;
+		   $pos++;
+	}
+	return round($size,$dec)." ".$a[$pos];
+}
+
+/**
+* 隐藏手机号中间4位
+* @param $phone
+* @return mixed
+*/
+function hidetel($phone){
+    $IsWhat = preg_match('/(0[0-9]{2,3}[-]?[2-9][0-9]{6,7}[-]?[0-9]?)/i',$phone); 
+    if($IsWhat == 1){
+        return preg_replace('/(0[0-9]{2,3}[-]?[2-9])[0-9]{3,4}([0-9]{3}[-]?[0-9]?)/i','$1****$2',$phone);
+    }else{
+        return  preg_replace('/(1[3587]{1}[0-9])[0-9]{4}([0-9]{4})/i','$1****$2',$phone);
+    }
+}
+
+/**
+ * 时间格式化
+ * @param $time
+ * @return string
+ */
+function formatTime($time) {
+    $now_time = time();
+    $t = $now_time - $time;
+    $mon = (int) ($t / (86400 * 30));
+    if ($mon >= 1) {
+        return '一个月前';
+    }
+    $day = (int) ($t / 86400);
+    if ($day >= 1) {
+        return $day . '天前';
+    }
+    $h = (int) ($t / 3600);
+    if ($h >= 1) {
+        return $h . '小时前';
+    }
+    $min = (int) ($t / 60);
+    if ($min >= 1) {
+        return $min . '分钟前';
+    }
+    return '刚刚';
+}
+
+/**
+ * 时间格式化
+ * @param $time
+ * @return string
+ */
+function pincheTime($time) {
+     $today  =  strtotime(date('Y-m-d')); //今天零点
+      $here   =  (int)(($time - $today)/86400) ; 
+      if($here==1){
+          return '明天';  
+      }
+      if($here==2) {
+          return '后天';  
+      }
+      if($here>=3 && $here<7){
+          return $here.'天后';  
+      }
+      if($here>=7 && $here<30){
+          return '一周后';  
+      }
+      if($here>=30 && $here<365){
+          return '一个月后';  
+      }
+      if($here>=365){
+          $r = (int)($here/365).'年后'; 
+          return   $r;
+      }
+     return '今天';
+}
+
+/**
+* 
+* @param 时间戳 $time
+* 友好时间显示
+* @return 
+*/
+function timeline($time){
+    if(time()<=$time){
+    return date("Y-m-d H:i:s",$time);
+    }else{
+    $t = time()-$time;  
+    $f = array(  
+        '31536000'=>'年',  
+        '2592000'=>'个月',  
+        '604800'=>'星期',  
+        '86400'=>'天',  
+        '3600'=>'小时',  
+        '60'=>'分钟',  
+        '1'=>'秒'  
+    );  
+    foreach($f as $k=>$v){  
+        if(0 != $c = floor($t/(int)$k)){  
+            return $c.$v.'前';  
+        }  
+    }
+    }
+}
+
+/**
+ * 计算两个时间的时差
+ * @param $begin_time
+ * @param $end_time
+ * @return array
+ */
+function timeDiff($begin_time, $end_time) {
+    if ($begin_time < $end_time) {
+        $starttime = $begin_time;
+        $endtime = $end_time;
+    } else {
+        $starttime = $end_time;
+        $endtime = $begin_time;
+    }
+    $timediff = $endtime - $starttime;
+    $days = intval( $timediff / 86400 );
+    $remain = $timediff % 86400;
+    $hours = sprintf("%02d", intval( $remain / 3600 ));
+    $remain = $remain % 3600;
+    $mins = sprintf("%02d", intval( $remain / 60 ));
+    $secs = sprintf("%02d",$remain % 60);
+    $res = array( "day" => $days, "hour" => $hours, "min" => $mins, "sec" => $secs );
+    return $res;
+}
+
+/**
+ * 获取当前毫秒时间戳
+ * @return string
+ */
+function getMillisecond() {
+    list($t1, $t2) = explode(' ', microtime());
+    return $t2 .  ceil( ($t1 * 1000) );
+}
+
+/**
+ * 生成n位随机数
+ * @param int $length
+ * @return string
+ */
+function createRandomKey($length=32) {
+    $chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+    $str ="";
+    for ( $i = 0; $i < $length; $i++ )  {
+        $str.= substr($chars, mt_rand(0, strlen($chars)-1), 1);
+    }
+    return $str;
+}
+
+/**
+ * 生成n位包含$string的随机数
+ * @param int $length
+ * @param string $str
+ * @return string
+ */
+function createRandomStringKey($length=32, $chars = "abcdefghijklmnopqrstuvwxyz0123456789") {
+    $str ="";
+    for ( $i = 0; $i < $length; $i++ )  {
+        $str.= substr($chars, mt_rand(0, strlen($chars)-1), 1);
+    }
+    return $str;
+}
+
+/**
+ * post的curl 兼容https
+ * @param $url
+ * @param $data
+ * @return mixed
+ */
+function curlPostForHttps($url, $data) {
+
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
+    curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE); // https请求 不验证证书和hosts
+    curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+    curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+        "Content-Type: application/json", "Content-Length: ".strlen($data)));
+    $result = json_decode(curl_exec($curl), true);
+    curl_close($curl);
+
+    return $result;
+
+}
+
+/**
+ * 16进制颜色值转 rgb
+ * @param $colour
+ * @return array|bool
+ */
+function hex2rgb( $colour ) {
+    if ( $colour[0] == '#' ) {
+        $colour = substr( $colour, 1 );
+    }
+    if ( strlen( $colour ) == 6 ) {
+        list( $r, $g, $b ) = array( $colour[0] . $colour[1], $colour[2] . $colour[3], $colour[4] . $colour[5] );
+    } elseif ( strlen( $colour ) == 3 ) {
+        list( $r, $g, $b ) = array( $colour[0] . $colour[0], $colour[1] . $colour[1], $colour[2] . $colour[2] );
+    } else {
+        return false;
+    }
+    $r = hexdec( $r );
+    $g = hexdec( $g );
+    $b = hexdec( $b );
+    return array( 'red' => $r, 'green' => $g, 'blue' => $b );
+}
+
+/**
+ * 系统邮件发送函数
+ * @param $address 收件人邮件
+ * @param $title    邮件标题
+ * @param $message  邮件内容
+ * @return bool
+ */
+function sendMail($address,$title,$message, $filePath=null) {
+    $mail = new PHPMailer();
+    // 设置PHPMailer使用SMTP服务器发送Email
+    $mail->IsSMTP();
+    // 设置邮件的字符编码，若不指定，则为'UTF-8'
+    $mail->CharSet='UTF-8';
+    // 添加收件人地址，可以多次使用来添加多个收件人
+    $mail->AddAddress($address);
+    // SMTP调试功能 0=关闭 1 = 错误和消息 2 = 消息
+    $mail->SMTPDebug = 0;
+    // 设置邮件正文
+    $mail->Body=$message;
+    // 设置邮件头的From字段。
+    $mail->From=config('mail.from');
+    // 设置发件人名字
+    $mail->FromName=config('mail.fromName');
+    // 设置邮件标题
+    $mail->Subject=$title;
+    // 设置SMTP服务器。
+    $mail->Host=config('mail.host');
+    // SMTP服务器的端口号
+    $mail->Port = config('mail.port');
+    // 设置为"需要验证"
+    $mail->SMTPAuth=true;
+    // 启用SSL加密为true
+    $mail->SMTPSecure =true;
+
+    // 添加附件
+    if ($filePath != null) {
+        $mail->AddAttachment($filePath);
+    }
+    // 设置用户名和密码。
+    $mail->Username=config('mail.username');
+    $mail->Password=config('mail.password');
+    // 发送邮件。
+    return($mail->Send());
+}
+
+/**
+ * 指定位置插入字符串
+ * @param $str  原字符串
+ * @param $i    插入位置
+ * @param $substr 插入字符串
+ * @return string 处理后的字符串
+ */
+function insertToStr($str, $i, $substr){
+    //指定插入位置前的字符串
+    $startstr="";
+    for($j=0; $j<$i; $j++){
+        $startstr .= $str[$j];
+    }
+
+    //指定插入位置后的字符串
+    $laststr="";
+    for ($j=$i; $j<strlen($str); $j++){
+        $laststr .= $str[$j];
+    }
+
+    //将插入位置前，要插入的，插入位置后三个字符串拼接起来
+    $str = $startstr . $substr . $laststr;
+
+    //返回结果
+    return $str;
+}
+
+/**
+ * 阿拉伯数字转中文数字
+ * @param $num
+ * @return string
+ */
+function ToChinaseNum($num)
+{
+    $char = array("零","一","二","三","四","五","六","七","八","九");
+    $dw = array("","十","百","千","万","亿","兆");
+    $retval = "";
+    $proZero = false;
+    for($i = 0;$i < strlen($num);$i++)
+    {
+        if($i > 0)    $temp = (int)(($num % pow (10,$i+1)) / pow (10,$i));
+        else $temp = (int)($num % pow (10,1));
+
+        if($proZero == true && $temp == 0) continue;
+
+        if($temp == 0) $proZero = true;
+        else $proZero = false;
+
+        if($proZero)
+        {
+            if($retval == "") continue;
+            $retval = $char[$temp].$retval;
+        }
+        else $retval = $char[$temp].$dw[$i].$retval;
+    }
+    if($retval == "一十") $retval = "十";
+    return $retval;
+}
